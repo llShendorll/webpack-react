@@ -1,3 +1,5 @@
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 module.exports = function() {
     return [
         {
@@ -14,16 +16,20 @@ module.exports = function() {
             }
         },
         {
+            test: /\.scss$/,
+            use:  [  'style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader']
+        },
+        {
             test: /\.hbs/,
             loader: 'handlebars-loader'
         },
         {
-            test: /\.(jpe?g|png|gif|svg|)$/i,
-            loader: 'file-loader?name=images/[hash].[ext]'
+            test: /\.json$/i,
+            loader: 'file-loader?name=[name].[ext]'
         },
         {
-            test: /\.(eot|svg|ttf|woff|woff2)$/,
-            loader: 'file-loader?name=fonts/[hash].[ext]'
-        }
+            test: /\.(jpe?g|png|gif|svg|)$/i,
+            loader: 'file-loader?name=images/[name].[ext]'
+        },
     ];
 };
