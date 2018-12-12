@@ -16,8 +16,21 @@ module.exports = function() {
             }
         },
         {
-            test: /\.scss$/,
-            use:  [  'style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader']
+            test: /\.(css|scss)$/,
+            use: [
+                    'style-loader',
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: () => [require('autoprefixer')({
+                                'browsers': ['> 1%', 'last 16 versions']
+                            })],
+                        }
+                    },
+                    'sass-loader'
+                 ]
         },
         {
             test: /\.hbs/,
@@ -29,7 +42,15 @@ module.exports = function() {
         },
         {
             test: /\.(jpe?g|png|gif|svg|)$/i,
-            loader: 'file-loader?name=images/[name].[ext]'
+            use: [
+                {
+                    loader: 'file-loader',
+                    options: {
+                        name: '[name].[ext]',
+                        outputPath: 'images/',
+                    }
+                }
+            ]
         },
     ];
 };

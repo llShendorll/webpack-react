@@ -11,27 +11,29 @@ module.exports = {
             ...rules,
         ]
     },
-    mode: "development",
     output: {
         path: __dirname + '/dist',
         publicPath: '/',
-        filename: 'main.js'
+        filename: 'main.[hash].js',
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
 
+        // new HtmlWebpackPlugin({
+        //     inject: false,
+        //     hash: true,
+        //     template: './template/page/index.pug'
+        // }),
+
         new HtmlWebpackPlugin({
-            inject: false,
-            hash: true,
-            template: './template/page/index.pug'
+            template: './template/index.html'
         }),
 
         new MiniCssExtractPlugin({
-            filename: 'app.css',
+            filename: 'app.[chunkhash].css',
         }),
 
-        new CleanWebpackPlugin(['dist'])
-
+        new CleanWebpackPlugin(['dist']),
     ],
     devServer: {
         contentBase: './dist',
